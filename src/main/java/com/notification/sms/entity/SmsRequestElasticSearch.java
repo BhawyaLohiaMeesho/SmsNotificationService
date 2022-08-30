@@ -2,52 +2,47 @@ package com.notification.sms.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Document(indexName = "sms_requests6")
-@Table(name="sms_request")
-public class SmsRequest {
+@Document(indexName = "sms_requests")
+public class SmsRequestElasticSearch {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name="phone_number",nullable = false,unique = true)
     private String phoneNumber;
 
-    @Column(name="message",nullable = false)
     private String message;
 
-    @Column(name="status")
     private String status;
 
-    @Column(name="failure_code")
     private String failureCode;
 
-    @Column(name="failure_comments")
     private String failureComments;
 
-    @Column(name="created_at")
-    @CreationTimestamp
-    @Field(type= FieldType.Date,format = DateFormat.custom,pattern = "yyyy-MM-dd HH:mm:ss")
+    @Field(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    @Column(name="updated_at")
-    @UpdateTimestamp
-    @Field(type= FieldType.Date,format = DateFormat.custom,pattern = "yyyy-MM-dd HH:mm:ss")
+    @Field(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
-    public SmsRequest(){}
+    public SmsRequestElasticSearch(){}
 
-    public SmsRequest(String phoneNumber, String message) {
+    public SmsRequestElasticSearch(Integer id, String phoneNumber, String message, String status,
+                                   String failureCode, String failureComments, LocalDateTime createdAt,
+                                   LocalDateTime updatedAt) {
+        this.id = id;
         this.phoneNumber = phoneNumber;
         this.message = message;
+        this.status = status;
+        this.failureCode = failureCode;
+        this.failureComments = failureComments;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Integer getId() {
@@ -116,15 +111,15 @@ public class SmsRequest {
 
     @Override
     public String toString() {
-        return "SmsRequest: {" +
+        return "SmsRequestElasticSearch{" +
                 "id=" + id +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", message='" + message + '\'' +
                 ", status='" + status + '\'' +
                 ", failureCode='" + failureCode + '\'' +
                 ", failureComments='" + failureComments + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }

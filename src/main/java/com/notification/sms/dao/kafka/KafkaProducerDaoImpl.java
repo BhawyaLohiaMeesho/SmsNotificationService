@@ -32,5 +32,6 @@ public class KafkaProducerDaoImpl implements KafkaProducerDao{
                         + requestId + "] due to : " + exception.getMessage());
             }
         });
+
     }
 }

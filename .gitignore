@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+elasticsearch-7.17.4-darwin-x86_64.tar.gz
+elasticsearch-7.17.4

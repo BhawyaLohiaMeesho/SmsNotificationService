@@ -12,6 +12,5 @@ public class ConsumerServiceImpl implements ConsumerService {
     //@KafkaListener(topics= Data.TOPIC_SMS_REQUEST,groupId = "sms_request_handlers")
     public void listenerForSmsRequest(Integer requestId) {
             System.out.println("Request to consumer: "+requestId);
-
     }
 }
