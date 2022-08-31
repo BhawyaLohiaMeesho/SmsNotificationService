@@ -1,9 +1,12 @@
 package com.notification.sms.controller;
 
 import com.notification.sms.entity.PhoneNumber;
+import com.notification.sms.exceptions.InvalidApiKeyException;
 import com.notification.sms.exceptions.NullRequestBodyException;
 import com.notification.sms.request.BlacklistRequest;
 import com.notification.sms.response.SuccessResponse;
+import com.notification.sms.service.AuthenticationService;
+import com.notification.sms.service.AuthenticationServiceImpl;
 import com.notification.sms.service.ProducerService;
 import com.notification.sms.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +20,20 @@ public class BlacklistController {
 
      ProducerService producerService;
 
+     AuthenticationService authenticationService;
+
      @Autowired
-     public BlacklistController(ProducerService producerService){
+     public BlacklistController(ProducerService producerService, AuthenticationService authenticationService){
          this.producerService=producerService;
+         this.authenticationService=authenticationService;
      }
 
      @GetMapping("/")
-     public SuccessResponse<List<PhoneNumber>> getBlacklist() throws Exception{
+     public SuccessResponse<List<PhoneNumber>> getBlacklist(@RequestHeader(value = "key",required = false) String apiKey) throws Exception{
+
+         if(!authenticationService.isAuthorized(apiKey)){
+             throw new InvalidApiKeyException();
+         }
 
          List <PhoneNumber> blacklist=producerService.getBlacklist();
 
@@ -31,10 +41,16 @@ public class BlacklistController {
      }
 
      @PostMapping("/add")
-     public SuccessResponse<String> addToBlacklist(@RequestBody BlacklistRequest blacklistRequest) throws Exception{
-        if(blacklistRequest==null){
+     public SuccessResponse<String> addToBlacklist(@RequestHeader(value = "key",required = false) String apiKey,
+                                                   @RequestBody BlacklistRequest blacklistRequest) throws Exception{
+
+         if(!authenticationService.isAuthorized(apiKey)){
+             throw new InvalidApiKeyException();
+         }
+
+         if(blacklistRequest==null){
             throw new NullRequestBodyException();
-        }
+         }
 
         blacklistRequest.checkRequiredValues();
 
@@ -46,7 +62,13 @@ public class BlacklistController {
      }
 
      @PostMapping("/delete")
-     public SuccessResponse <String> removeFromBlacklist(@RequestBody BlacklistRequest blacklistRequest) throws Exception{
+     public SuccessResponse <String> removeFromBlacklist(@RequestHeader(value = "key",required = false) String apiKey,
+                                                         @RequestBody BlacklistRequest blacklistRequest) throws Exception{
+
+         if(!authenticationService.isAuthorized(apiKey)){
+             throw new InvalidApiKeyException();
+         }
+
          if(blacklistRequest==null){
              throw new NullRequestBodyException();
          }

@@ -85,6 +85,23 @@ public class RestExceptionHandler {
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleException(InvalidApiKeyException e){
+        String code=ExceptionCode.INVALID_REQUEST;
+        String message="Api key is not valid";
+        ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+   @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleException(ApiKeyNullException e){
+        String code=ExceptionCode.INVALID_REQUEST;
+        String message="Provide api key in the header";
+        ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(Exception e){
         String code=ExceptionCode.INTERNAL_SERVER_ERROR;
