@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 
 @Entity
 @Document(indexName = "sms_requests6")
-@Table(name="sms_request")
+@Table(name="sms_request2")
 public class SmsRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name="phone_number",nullable = false,unique = true)
+    @Column(name="phone_number",nullable = false)
     private String phoneNumber;
 
     @Column(name="message",nullable = false)

@@ -2,6 +2,7 @@ package com.notification.sms.controller;
 
 import com.notification.sms.entity.PhoneNumber;
 import com.notification.sms.request.BlacklistRequest;
+import com.notification.sms.response.SuccessResponse;
 import com.notification.sms.service.ProducerService;
 import com.notification.sms.utils.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,27 +22,28 @@ public class BlacklistController {
      }
 
      @GetMapping("/")
-     public List<PhoneNumber> getBlacklist() throws Exception{
-         return producerService.getBlacklist();
+     public SuccessResponse<List<PhoneNumber>> getBlacklist() throws Exception{
+         List <PhoneNumber> blacklist=producerService.getBlacklist();
+         return new SuccessResponse<>(blacklist);
      }
 
      @PostMapping("/add")
-     public String addToBlacklist(@RequestBody BlacklistRequest blacklistRequest) throws Exception{
+     public SuccessResponse<String> addToBlacklist(@RequestBody BlacklistRequest blacklistRequest) throws Exception{
         if(blacklistRequest==null){
             throw new Exception("BAD_REQUEST");
         }
         List <PhoneNumber> phoneNumberList=Converter.convertToPhoneNumberType(blacklistRequest.getPhoneNumbers());
         producerService.addToBlacklist(phoneNumberList);
-        return "Added Successfully";
+        return new SuccessResponse<>("Added Successfully");
      }
 
      @PostMapping("/delete")
-     public String removeFromBlacklist(@RequestBody BlacklistRequest blacklistRequest) throws Exception{
+     public SuccessResponse <String> removeFromBlacklist(@RequestBody BlacklistRequest blacklistRequest) throws Exception{
          if(blacklistRequest==null){
              throw new Exception("BAD_REQUEST");
          }
          List <PhoneNumber> phoneNumberList=Converter.convertToPhoneNumberType(blacklistRequest.getPhoneNumbers());
          producerService.removeFromBlacklist(phoneNumberList);
-        return "Removed Successfully";
+        return new SuccessResponse<>("Removed Successfully");
      }
 }

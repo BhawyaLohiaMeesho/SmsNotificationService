@@ -1,5 +1,6 @@
 package com.notification.sms.service;
 
+import com.notification.sms.constant.Data;
 import com.notification.sms.dao.elasticsearch.ElasticsearchSmsRequestDao;
 import com.notification.sms.dao.kafka.KafkaProducerDao;
 import com.notification.sms.dao.mysql.BlacklistDao;
@@ -47,17 +48,17 @@ public class ProducerServiceImpl implements ProducerService {
     @Override
     public SmsRequest getSms(Integer requestId) throws Exception {
         Optional<SmsRequest> smsRequest=smsRequestDao.findById(requestId);
-        if(smsRequest.isPresent()){
-            return smsRequest.get();
+        if(!smsRequest.isPresent()){
+            throw new Exception("Element not found");
         }
-        throw new Exception("Element not found");
+        return smsRequest.get();
     }
 
     @Override
     public Integer sendSms(SmsRequest smsRequest) throws Exception {
             SmsRequest savedSmsRequest = smsRequestDao.save(smsRequest);
             Integer requestId = savedSmsRequest.getId();
-            //kafkaProducerDao.sendSmsRequest(Data.TOPIC_SMS_REQUEST,requestId);
+            kafkaProducerDao.sendSmsRequest(Data.TOPIC_SMS_REQUEST,requestId);
             elasticsearchSmsRequestDao.save(savedSmsRequest);
             return requestId;
     }
@@ -76,9 +77,8 @@ public class ProducerServiceImpl implements ProducerService {
 
     @Override
     public List<PhoneNumber> getBlacklist() throws Exception {
-        List <PhoneNumber> blacklist=blacklistDao.findAll();
-        List <PhoneNumber> blacklist2=redisBlacklistDao.getAll();
-        return blacklist2;
+        List <PhoneNumber> blacklist=redisBlacklistDao.getAll();
+        return blacklist;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ProducerServiceImpl implements ProducerService {
                                                        LocalDateTime endTime,
                                                        Integer pageNumber,
                                                        Integer pageSize) throws Exception {
-           Page<SmsRequest> resultPage = elasticsearchSmsRequestDao.findByCreatedAtBetween(startTime, endTime, PageRequest.of(pageNumber, pageSize));
+           Page<SmsRequest> resultPage = elasticsearchSmsRequestDao.findByUpdatedAtBetween(startTime, endTime, PageRequest.of(pageNumber, pageSize));
            List <SmsRequest> messagesWithinTimeRange=resultPage.getContent();
            System.out.println(messagesWithinTimeRange);
            return messagesWithinTimeRange;
