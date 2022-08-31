@@ -36,7 +36,7 @@ public class ConsumerServiceImpl implements ConsumerService {
            try {
                Optional<SmsRequest> smsRequestDetailsOptional = smsRequestDao.findById(requestId);
                if (!smsRequestDetailsOptional.isPresent())
-                   throw new Exception("Request With gived in not found in db");
+                   throw new Exception("Request With given in not found in db");
                SmsRequest smsRequest = smsRequestDetailsOptional.get();
                PhoneNumber currentRequestPhoneNumber = new PhoneNumber(smsRequest.getPhoneNumber());
                boolean isBlacklisted = redisBlacklistDao.isPresent(currentRequestPhoneNumber);
