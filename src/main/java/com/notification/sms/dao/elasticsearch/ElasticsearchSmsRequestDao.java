@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface ElasticsearchSmsRequestDao extends ElasticsearchRepository<SmsRequest,Integer> {
    public Page<SmsRequest> findByUpdatedAtBetween(LocalDateTime startTime, LocalDateTime endTime, Pageable pageable);
-   public List <SmsRequest> findByMessage(String text, Pageable pageable);
+   public List <SmsRequest> findByMessageContaining(String text, Pageable pageable);
 }

@@ -25,13 +25,14 @@ public class PhoneNumber {
         this.phoneNumber = phoneNumber;
     }
 
+    public static boolean isValid(String phoneNumber){
+        return true;
+    }
     @Override
     public String toString() {
         return "PhoneNumber: {" +
                 "phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
-//    public String getValue(){
-//        return phoneNumber;
-//    }
+
 }

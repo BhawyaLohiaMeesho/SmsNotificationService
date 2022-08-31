@@ -47,7 +47,9 @@ public class ConsumerServiceImpl implements ConsumerService {
             elasticsearchSmsRequestDao.save(smsRequestWithUpdatedUpdateTime);
             System.out.println(smsRequestWithUpdatedUpdateTime);
     }
-    public SmsRequest getSmsRequestWithUpdatedStatus(SmsRequest smsRequest,SmsRequestStatus smsRequestStatus){
+    public SmsRequest getSmsRequestWithUpdatedStatus(SmsRequest smsRequest,SmsRequestStatus smsRequestStatus) throws Exception{
+        if(smsRequestStatus==null)
+            throw new Exception("Sms request status is null");
         smsRequest.setStatus(smsRequestStatus.getStatus());
         if(!smsRequestStatus.getStatus().equals(Data.IMICONNECT_SUCCESS_CODE)) {
             smsRequest.setFailureCode(smsRequestStatus.getCode());

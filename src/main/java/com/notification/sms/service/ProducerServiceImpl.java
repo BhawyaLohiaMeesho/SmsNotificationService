@@ -65,7 +65,7 @@ public class ProducerServiceImpl implements ProducerService {
 
     @Override
     public void addToBlacklist(List<PhoneNumber> phoneNumberList) throws Exception {
-         List <PhoneNumber> savedPhoneNumberList=blacklistDao.saveAll(phoneNumberList);
+         blacklistDao.saveAll(phoneNumberList);
          redisBlacklistDao.saveAll(phoneNumberList);
     }
 
@@ -96,7 +96,7 @@ public class ProducerServiceImpl implements ProducerService {
     public List<SmsRequest> getMessagesWithText(String text,
                                                 Integer pageNumber,
                                                 Integer pageSize) throws Exception {
-        List <SmsRequest> messagesWithText=elasticsearchSmsRequestDao.findByMessage(text,PageRequest.of(pageNumber,pageSize));
+        List <SmsRequest> messagesWithText=elasticsearchSmsRequestDao.findByMessageContaining(text,PageRequest.of(pageNumber,pageSize));
         return messagesWithText;
     }
 

@@ -7,7 +7,10 @@ public class SmsWithTextRequest {
 
     private Integer pageSize;
 
-    public SmsWithTextRequest(){}
+    public SmsWithTextRequest(){
+        pageNumber=0;
+        pageSize=5;
+    }
 
     public SmsWithTextRequest(String text, Integer pageNumber, Integer pageSize) {
         this.text = text;
@@ -37,6 +40,12 @@ public class SmsWithTextRequest {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void checkRequiredValues() throws Exception{
+         if(text==null){
+             throw new Exception("text is null");
+         }
     }
 
     @Override

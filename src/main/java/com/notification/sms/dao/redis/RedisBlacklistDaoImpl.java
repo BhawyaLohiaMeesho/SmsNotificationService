@@ -40,6 +40,8 @@ public class RedisBlacklistDaoImpl implements RedisBlacklistDao{
         try(Jedis jedis=jedisPool.getResource()){
             Pipeline pipeline=jedis.pipelined();
             for (PhoneNumber phoneNumber : phoneNumberList) {
+                if(phoneNumber==null)
+                    throw new Exception("Null Phone Number present");
                 pipeline.sadd(blacklist, phoneNumber.getPhoneNumber());
             }
             pipeline.sync();
@@ -54,6 +56,8 @@ public class RedisBlacklistDaoImpl implements RedisBlacklistDao{
         try(Jedis jedis=jedisPool.getResource()){
             Pipeline pipeline=jedis.pipelined();
             for (PhoneNumber phoneNumber : phoneNumberList) {
+                if(phoneNumber==null)
+                    throw new Exception("Null Phone Number present");
                 pipeline.srem(blacklist, phoneNumber.getPhoneNumber());
             }
             pipeline.sync();

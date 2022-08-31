@@ -27,8 +27,12 @@ public class SmsNotificationController {
            if(smsRequestRequest==null){
                throw new Exception("BAD_REQUEST");
            }
+           smsRequestRequest.checkRequiredValues();
+
            SmsRequest smsRequest=new SmsRequest(smsRequestRequest.getPhoneNumber(),smsRequestRequest.getMessage());
+
            Integer requestId=producerService.sendSms(smsRequest);
+
            return new SuccessResponse<>(new SendSmsResponse(requestId,"Request created successfully"));
     }
 
@@ -37,7 +41,9 @@ public class SmsNotificationController {
         if(requestId==null){
             throw new Exception("BAD_REQUEST");
         }
+
         SmsRequest smsRequest=producerService.getSms(requestId);
+
         return new SuccessResponse<>(smsRequest);
     }
 
@@ -47,8 +53,12 @@ public class SmsNotificationController {
         if(smsWithinTimeRangeRequest==null){
             throw new Exception("BAD_REQUEST");
         }
+
+        smsWithinTimeRangeRequest.checkRequiredValues();
+
         List<SmsRequest> smsRequests=producerService.getMessagesWithinTimeRange(smsWithinTimeRangeRequest.getStartTime(),smsWithinTimeRangeRequest.getEndTime(),
                 smsWithinTimeRangeRequest.getPageNumber(),smsWithinTimeRangeRequest.getPageSize());
+
         return new SuccessResponse<>(smsRequests);
     }
 
@@ -57,8 +67,12 @@ public class SmsNotificationController {
         if(smsWithTextRequest==null){
             throw new Exception("Bad request");
         }
+
+        smsWithTextRequest.checkRequiredValues();
+
         List <SmsRequest> messagesWithText=producerService.getMessagesWithText(smsWithTextRequest.getText(),
                 smsWithTextRequest.getPageNumber(),smsWithTextRequest.getPageSize());
+
         return new SuccessResponse<>(messagesWithText);
     }
 

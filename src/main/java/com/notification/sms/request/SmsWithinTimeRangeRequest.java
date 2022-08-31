@@ -19,7 +19,10 @@ public class SmsWithinTimeRangeRequest {
     @JsonProperty("page_size")
     private Integer pageSize;
 
-    public SmsWithinTimeRangeRequest(){}
+    public SmsWithinTimeRangeRequest(){
+        pageNumber=0;
+        pageSize=5;
+    }
 
     public SmsWithinTimeRangeRequest(LocalDateTime startTime, LocalDateTime endTime) {
         this.startTime = startTime;
@@ -63,6 +66,13 @@ public class SmsWithinTimeRangeRequest {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public void checkRequiredValues() throws Exception{
+         if(startTime==null)
+             throw new Exception("start time is null");
+         if(endTime==null)
+             throw new Exception("end time is null");
     }
 
     @Override

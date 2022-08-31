@@ -20,7 +20,6 @@ public class KafkaProducerDaoImpl implements KafkaProducerDao{
         ListenableFuture<SendResult<Integer, Integer>> future = sender.send(topic, requestId);
 
         future.addCallback(new ListenableFutureCallback<SendResult<Integer, Integer>>() {
-
             @Override
             public void onSuccess(SendResult<Integer, Integer> result) {
                 System.out.println("Sent message=[" + requestId +

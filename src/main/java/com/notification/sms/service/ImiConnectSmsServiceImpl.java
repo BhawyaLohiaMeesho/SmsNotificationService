@@ -20,9 +20,6 @@ import java.util.Collections;
 public class ImiConnectSmsServiceImpl implements ImiConnectSmsService {
     @Override
     public SmsRequestStatus sendSms(SmsRequest smsRequest) throws Exception {
-        if(smsRequest==null){
-            throw new Exception("Bad request");
-        }
         RestTemplate restTemplate = new RestTemplate();
 
         MultiValueMap<String, String> header = getHeader();
@@ -55,7 +52,10 @@ public class ImiConnectSmsServiceImpl implements ImiConnectSmsService {
         SmsRequestStatus smsRequestStatus = mapper.readValue(smsRequestStatusString, SmsRequestStatus.class);
         return smsRequestStatus;
     }
-    private String getRequestBody(SmsRequest smsRequest){
+    private String getRequestBody(SmsRequest smsRequest) throws Exception{
+        if(smsRequest==null){
+            throw new Exception("Bad request");
+        }
         return "{\"deliverychannel\": \"sms\",\"channels\": {\"sms\": {\"text\": \"Hello, Greetings from Meesho.Click here to know more about us:https://meesho.com\"}},\"destination\": [{\"msisdn\": [\"+918953235585\"]}]}";
     }
 }

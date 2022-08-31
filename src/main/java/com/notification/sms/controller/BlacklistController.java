@@ -23,7 +23,9 @@ public class BlacklistController {
 
      @GetMapping("/")
      public SuccessResponse<List<PhoneNumber>> getBlacklist() throws Exception{
+
          List <PhoneNumber> blacklist=producerService.getBlacklist();
+
          return new SuccessResponse<>(blacklist);
      }
 
@@ -32,8 +34,13 @@ public class BlacklistController {
         if(blacklistRequest==null){
             throw new Exception("BAD_REQUEST");
         }
+
+        blacklistRequest.checkRequiredValues();
+
         List <PhoneNumber> phoneNumberList=Converter.convertToPhoneNumberType(blacklistRequest.getPhoneNumbers());
+
         producerService.addToBlacklist(phoneNumberList);
+
         return new SuccessResponse<>("Added Successfully");
      }
 
@@ -42,8 +49,13 @@ public class BlacklistController {
          if(blacklistRequest==null){
              throw new Exception("BAD_REQUEST");
          }
+
+         blacklistRequest.checkRequiredValues();
+
          List <PhoneNumber> phoneNumberList=Converter.convertToPhoneNumberType(blacklistRequest.getPhoneNumbers());
+
          producerService.removeFromBlacklist(phoneNumberList);
-        return new SuccessResponse<>("Removed Successfully");
+
+         return new SuccessResponse<>("Removed Successfully");
      }
 }

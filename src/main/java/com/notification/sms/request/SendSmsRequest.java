@@ -1,6 +1,7 @@
 package com.notification.sms.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notification.sms.entity.PhoneNumber;
 import com.notification.sms.response.SendSmsResponse;
 
 public class SendSmsRequest {
@@ -27,6 +28,16 @@ public class SendSmsRequest {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void checkRequiredValues() throws Exception{
+          if(phoneNumber==null)
+              throw new Exception("Phone number is null");
+          if(message==null)
+              throw new Exception("Message is null");
+          if(!PhoneNumber.isValid(phoneNumber)){
+              throw new Exception("Invalid phone number");
+          }
     }
 
     @Override
