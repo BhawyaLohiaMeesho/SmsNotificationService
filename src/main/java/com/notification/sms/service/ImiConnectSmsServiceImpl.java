@@ -40,6 +40,12 @@ public class ImiConnectSmsServiceImpl implements ImiConnectSmsService {
 
         SmsRequestStatus smsRequestStatus=getStatusObjectFromResponse(response);
 
+        ////////////Reached here means sent////////////
+        smsRequestStatus.setStatus(Data.SMS_REQUEST_STATUS_SENT);
+        smsRequestStatus.setCode(null);
+        smsRequestStatus.setComments(null);
+        ///////////
+
         return smsRequestStatus;
     }
     private MultiValueMap <String,String> getHeader(){

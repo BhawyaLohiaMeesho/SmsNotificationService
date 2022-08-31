@@ -48,7 +48,7 @@ public class SmsNotificationController {
 
            Integer requestId=producerService.sendSms(smsRequest);
 
-           return new SuccessResponse<>(new SendSmsResponse(requestId,"Request created successfully"));
+           return new SuccessResponse<>(new SendSmsResponse(requestId,"Message queued"));
     }
 
     @GetMapping("/{requestId}")

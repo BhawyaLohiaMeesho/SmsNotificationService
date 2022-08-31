@@ -35,9 +35,6 @@ public class SmsRequestStatus {
 
     public void setCode(String code) {
         this.code = code;
-        if(code.equals(Data.IMICONNECT_SUCCESS_CODE))
-            setStatus("SUCCESS");
-        else setStatus("FAILURE");
     }
 
     public String getComments() {

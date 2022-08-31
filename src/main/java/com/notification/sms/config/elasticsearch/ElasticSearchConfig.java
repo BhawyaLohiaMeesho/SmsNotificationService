@@ -1,5 +1,6 @@
 package com.notification.sms.config.elasticsearch;
 
+import com.notification.sms.constant.Data;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ public class ElasticSearchConfig {
     public RestHighLevelClient client() {
         ClientConfiguration clientConfiguration
                 = ClientConfiguration.builder()
-                .connectedTo("localhost:9200")
+                .connectedTo(Data.ELASTICSEARCH_SERVER_ADDRESS)
                 .build();
 
         return RestClients.create(clientConfiguration).rest();

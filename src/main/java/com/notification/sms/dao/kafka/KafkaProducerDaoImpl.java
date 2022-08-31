@@ -22,13 +22,11 @@ public class KafkaProducerDaoImpl implements KafkaProducerDao{
         future.addCallback(new ListenableFutureCallback<SendResult<Integer, Integer>>() {
             @Override
             public void onSuccess(SendResult<Integer, Integer> result) {
-                System.out.println("Sent message=[" + requestId +
-                        "] with offset=[" + result.getRecordMetadata().offset() + "]");
+                System.out.println("request id: "+requestId+" added to kafka");
             }
             @Override
             public void onFailure(Throwable exception) {
-                System.out.println("Unable to send message=["
-                        + requestId + "] due to : " + exception.getMessage());
+                System.out.println("Error in adding to kafka: "+ exception.getMessage());
             }
         });
 

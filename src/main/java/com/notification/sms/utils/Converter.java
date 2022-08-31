@@ -1,6 +1,9 @@
 package com.notification.sms.utils;
 
+import com.notification.sms.constant.Data;
 import com.notification.sms.entity.PhoneNumber;
+import com.notification.sms.entity.SmsRequest;
+import com.notification.sms.response.SmsRequestStatus;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,6 +34,16 @@ public class Converter {
             phoneNumbersList.add(phoneNumber);
         }
         return phoneNumbersList;
+    }
+    public static SmsRequest getSmsRequestWithUpdatedStatus(SmsRequest smsRequest, SmsRequestStatus smsRequestStatus) throws Exception{
+        if(smsRequestStatus==null)
+            throw new Exception("Sms request status is null");
+        smsRequest.setStatus(smsRequestStatus.getStatus());
+        if(!smsRequestStatus.getStatus().equals(Data.IMICONNECT_SUCCESS_CODE)) {
+            smsRequest.setFailureCode(smsRequestStatus.getCode());
+            smsRequest.setFailureComments(smsRequestStatus.getComments());
+        }
+        return smsRequest;
     }
 
 }

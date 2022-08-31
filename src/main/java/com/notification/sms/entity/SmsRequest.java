@@ -1,5 +1,6 @@
 package com.notification.sms.entity;
 
+import com.notification.sms.constant.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -43,11 +44,14 @@ public class SmsRequest {
     @Field(type= FieldType.Date,format = DateFormat.custom,pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
-    public SmsRequest(){}
+    public SmsRequest(){
+        this.status= Data.SMS_REQUEST_STATUS_QUEUED;
+    }
 
     public SmsRequest(String phoneNumber, String message) {
         this.phoneNumber = phoneNumber;
         this.message = message;
+        this.status= Data.SMS_REQUEST_STATUS_QUEUED;
     }
 
     public Integer getId() {
