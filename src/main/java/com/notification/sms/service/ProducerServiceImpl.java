@@ -8,6 +8,7 @@ import com.notification.sms.dao.mysql.SmsRequestDao;
 import com.notification.sms.dao.redis.RedisBlacklistDao;
 import com.notification.sms.entity.PhoneNumber;
 import com.notification.sms.entity.SmsRequest;
+import com.notification.sms.exceptions.RequestWithGivenIdNotFoundException;
 import com.notification.sms.request.SmsWithTextRequest;
 import com.notification.sms.request.SmsWithinTimeRangeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class ProducerServiceImpl implements ProducerService {
     public SmsRequest getSms(Integer requestId) throws Exception {
         Optional<SmsRequest> smsRequest=smsRequestDao.findById(requestId);
         if(!smsRequest.isPresent()){
-            throw new Exception("Element not found");
+            throw new RequestWithGivenIdNotFoundException();
         }
         return smsRequest.get();
     }

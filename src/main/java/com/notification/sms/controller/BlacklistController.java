@@ -1,6 +1,7 @@
 package com.notification.sms.controller;
 
 import com.notification.sms.entity.PhoneNumber;
+import com.notification.sms.exceptions.NullRequestBodyException;
 import com.notification.sms.request.BlacklistRequest;
 import com.notification.sms.response.SuccessResponse;
 import com.notification.sms.service.ProducerService;
@@ -32,7 +33,7 @@ public class BlacklistController {
      @PostMapping("/add")
      public SuccessResponse<String> addToBlacklist(@RequestBody BlacklistRequest blacklistRequest) throws Exception{
         if(blacklistRequest==null){
-            throw new Exception("BAD_REQUEST");
+            throw new NullRequestBodyException();
         }
 
         blacklistRequest.checkRequiredValues();
@@ -47,7 +48,7 @@ public class BlacklistController {
      @PostMapping("/delete")
      public SuccessResponse <String> removeFromBlacklist(@RequestBody BlacklistRequest blacklistRequest) throws Exception{
          if(blacklistRequest==null){
-             throw new Exception("BAD_REQUEST");
+             throw new NullRequestBodyException();
          }
 
          blacklistRequest.checkRequiredValues();

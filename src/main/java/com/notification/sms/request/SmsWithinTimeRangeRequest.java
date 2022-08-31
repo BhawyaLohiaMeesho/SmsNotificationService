@@ -2,6 +2,8 @@ package com.notification.sms.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.notification.sms.exceptions.NullEndDateTimeException;
+import com.notification.sms.exceptions.NullStartDateTimeException;
 
 import java.time.LocalDateTime;
 
@@ -70,9 +72,9 @@ public class SmsWithinTimeRangeRequest {
 
     public void checkRequiredValues() throws Exception{
          if(startTime==null)
-             throw new Exception("start time is null");
+             throw new NullStartDateTimeException();
          if(endTime==null)
-             throw new Exception("end time is null");
+             throw new NullEndDateTimeException();
     }
 
     @Override

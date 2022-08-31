@@ -32,20 +32,25 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     @Override
     @KafkaListener(topics= Data.TOPIC_SMS_REQUEST,groupId = "sms_request_handlers")
-    public void listenerForSmsRequest(Integer requestId) throws Exception {
-            Optional <SmsRequest> smsRequestDetailsOptional=smsRequestDao.findById(requestId);
-            if(!smsRequestDetailsOptional.isPresent())
-                throw new Exception("Request not found");
-            SmsRequest smsRequest=smsRequestDetailsOptional.get();
-            PhoneNumber currentRequestPhoneNumber= new PhoneNumber(smsRequest.getPhoneNumber());
-            boolean isBlacklisted=redisBlacklistDao.isPresent(currentRequestPhoneNumber);
-            if(isBlacklisted)
-                return;
-            SmsRequestStatus smsRequestStatus=imiConnectSmsService.sendSms(smsRequest);
-            SmsRequest smsRequestWithUpdatedStatus=getSmsRequestWithUpdatedStatus(smsRequest,smsRequestStatus);
-            SmsRequest smsRequestWithUpdatedUpdateTime=smsRequestDao.save(smsRequestWithUpdatedStatus);
-            elasticsearchSmsRequestDao.save(smsRequestWithUpdatedUpdateTime);
-            System.out.println(smsRequestWithUpdatedUpdateTime);
+    public void listenerForSmsRequest(Integer requestId)  {
+           try {
+               Optional<SmsRequest> smsRequestDetailsOptional = smsRequestDao.findById(requestId);
+               if (!smsRequestDetailsOptional.isPresent())
+                   throw new Exception("Request With gived in not found in db");
+               SmsRequest smsRequest = smsRequestDetailsOptional.get();
+               PhoneNumber currentRequestPhoneNumber = new PhoneNumber(smsRequest.getPhoneNumber());
+               boolean isBlacklisted = redisBlacklistDao.isPresent(currentRequestPhoneNumber);
+               if (isBlacklisted)
+                   return;
+               SmsRequestStatus smsRequestStatus = imiConnectSmsService.sendSms(smsRequest);
+               SmsRequest smsRequestWithUpdatedStatus = getSmsRequestWithUpdatedStatus(smsRequest, smsRequestStatus);
+               SmsRequest smsRequestWithUpdatedUpdateTime = smsRequestDao.save(smsRequestWithUpdatedStatus);
+               elasticsearchSmsRequestDao.save(smsRequestWithUpdatedUpdateTime);
+               System.out.println(smsRequestWithUpdatedUpdateTime);
+           }
+           catch(Exception exception){
+               System.out.println(exception.getMessage());
+           }
     }
     public SmsRequest getSmsRequestWithUpdatedStatus(SmsRequest smsRequest,SmsRequestStatus smsRequestStatus) throws Exception{
         if(smsRequestStatus==null)

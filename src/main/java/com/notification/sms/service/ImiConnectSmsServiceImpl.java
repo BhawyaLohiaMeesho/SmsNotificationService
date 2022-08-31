@@ -44,7 +44,7 @@ public class ImiConnectSmsServiceImpl implements ImiConnectSmsService {
 
     private SmsRequestStatus getStatusObjectFromResponse(ResponseEntity <String> response) throws Exception {
         if(response==null){
-            throw new Exception("Internal error. response in null");
+            throw new Exception("Internal server error from 3rd party. Response is null");
         }
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(response.getBody());
@@ -54,7 +54,7 @@ public class ImiConnectSmsServiceImpl implements ImiConnectSmsService {
     }
     private String getRequestBody(SmsRequest smsRequest) throws Exception{
         if(smsRequest==null){
-            throw new Exception("Bad request");
+            throw new Exception("Sms request is null");
         }
         return "{\"deliverychannel\": \"sms\",\"channels\": {\"sms\": {\"text\": \"Hello, Greetings from Meesho.Click here to know more about us:https://meesho.com\"}},\"destination\": [{\"msisdn\": [\"+918953235585\"]}]}";
     }

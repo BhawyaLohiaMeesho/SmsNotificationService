@@ -1,6 +1,7 @@
 package com.notification.sms.controller;
 
 import com.notification.sms.entity.SmsRequest;
+import com.notification.sms.exceptions.NullRequestBodyException;
 import com.notification.sms.request.SendSmsRequest;
 import com.notification.sms.request.SmsWithTextRequest;
 import com.notification.sms.request.SmsWithinTimeRangeRequest;
@@ -25,7 +26,7 @@ public class SmsNotificationController {
     @PostMapping("/send")
     public SuccessResponse <SendSmsResponse> sendSms(@RequestBody SendSmsRequest smsRequestRequest) throws Exception {
            if(smsRequestRequest==null){
-               throw new Exception("BAD_REQUEST");
+               throw new NullRequestBodyException();
            }
            smsRequestRequest.checkRequiredValues();
 
@@ -39,7 +40,7 @@ public class SmsNotificationController {
     @GetMapping("/{requestId}")
     public SuccessResponse<SmsRequest> getSms(@PathVariable("requestId") Integer requestId) throws Exception{
         if(requestId==null){
-            throw new Exception("BAD_REQUEST");
+            throw new NullRequestBodyException();
         }
 
         SmsRequest smsRequest=producerService.getSms(requestId);
@@ -51,7 +52,7 @@ public class SmsNotificationController {
     public SuccessResponse<List<SmsRequest>> getMessagesWithinTimeRange(@RequestBody SmsWithinTimeRangeRequest smsWithinTimeRangeRequest) throws Exception {
 
         if(smsWithinTimeRangeRequest==null){
-            throw new Exception("BAD_REQUEST");
+            throw new NullRequestBodyException();
         }
 
         smsWithinTimeRangeRequest.checkRequiredValues();
@@ -65,7 +66,7 @@ public class SmsNotificationController {
     @PostMapping("/get-with-text")
     public SuccessResponse<List<SmsRequest>> getMessagesWithText(@RequestBody SmsWithTextRequest smsWithTextRequest) throws Exception {
         if(smsWithTextRequest==null){
-            throw new Exception("Bad request");
+            throw new NullRequestBodyException();
         }
 
         smsWithTextRequest.checkRequiredValues();

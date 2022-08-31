@@ -1,5 +1,7 @@
 package com.notification.sms.request;
 
+import com.notification.sms.exceptions.NullTextException;
+
 public class SmsWithTextRequest {
     private String text;
 
@@ -44,7 +46,7 @@ public class SmsWithTextRequest {
 
     public void checkRequiredValues() throws Exception{
          if(text==null){
-             throw new Exception("text is null");
+             throw new NullTextException();
          }
     }
 
