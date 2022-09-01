@@ -4,6 +4,9 @@ public class Data {
     public static final String KAFKA_SERVER_ADDRESS="localhost:9092";
     public static final String TOPIC_SMS_REQUEST="notification.sms_request";
 
+    public static final String SMS_REQUEST_TABLE_MYSQL="sms_request2";
+
+    public static final String SMS_REQUEST_INDEX_ELASTICSEARCH="sms_requests6";
     public static final String ELASTICSEARCH_SERVER_ADDRESS="localhost:9200";
     public static final String IMICONNECT_URL="https://api.imiconnect.io/resources/v1/messaging";
     public static final String IMICONNECT_API_KEY="93ceffda-5941-11ea-9da9-025282c394f2";

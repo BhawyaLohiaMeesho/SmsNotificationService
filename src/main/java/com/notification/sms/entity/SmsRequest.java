@@ -12,8 +12,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Document(indexName = "sms_requests6")
-@Table(name="sms_request2")
+@Document(indexName = Data.SMS_REQUEST_INDEX_ELASTICSEARCH)
+@Table(name=Data.SMS_REQUEST_TABLE_MYSQL)
 public class SmsRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

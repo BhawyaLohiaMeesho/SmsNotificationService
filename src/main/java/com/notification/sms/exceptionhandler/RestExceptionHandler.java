@@ -20,56 +20,56 @@ public class RestExceptionHandler {
         String code= ExceptionCode.INVALID_REQUEST;
         String message="Phone number is not valid";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(NullPhoneNumberException e){
         String code=ExceptionCode.INVALID_REQUEST;
         String message="Phone number is mandatory";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(NullPhoneNumberListException e){
         String code=ExceptionCode.INVALID_REQUEST;
         String message="Phone number list is mandatory";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(NullItemPhoneNumberListException e){
         String code=ExceptionCode.INVALID_REQUEST;
         String message="One or more phone numbers in phone number list are null";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(NullRequestBodyException e){
         String code=ExceptionCode.INVALID_REQUEST;
         String message="Request body is null";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(NullStartDateTimeException e){
         String code=ExceptionCode.INVALID_REQUEST;
         String message="Start date time should not be null";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(NullEndDateTimeException e){
         String code=ExceptionCode.INVALID_REQUEST;
         String message="End date time should not be null";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(NullTextException e){
         String code=ExceptionCode.INVALID_REQUEST;
         String message="text should not be null";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(RequestWithGivenIdNotFoundException e){
@@ -83,7 +83,7 @@ public class RestExceptionHandler {
         String code=ExceptionCode.INVALID_REQUEST;
         String message="Message should not be null";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
@@ -99,7 +99,7 @@ public class RestExceptionHandler {
         String code=ExceptionCode.INVALID_REQUEST;
         String message="Provide api key in the header";
         ErrorResponse errorResponse=new ErrorResponse(new ErrorResponseDetails(code,message));
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
