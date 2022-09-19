@@ -38,6 +38,9 @@ public class Converter {
     public static SmsRequest getSmsRequestWithUpdatedStatus(SmsRequest smsRequest, SmsRequestStatus smsRequestStatus) throws Exception{
         if(smsRequestStatus==null)
             throw new Exception("Sms request status is null");
+        if(smsRequest==null) {
+            throw new Exception("Sms request is null");
+        }
         smsRequest.setStatus(smsRequestStatus.getStatus());
         if(!smsRequestStatus.getStatus().equals(Data.IMICONNECT_SUCCESS_CODE)) {
             smsRequest.setFailureCode(smsRequestStatus.getCode());

@@ -14,6 +14,7 @@ public class Data {
 
     public static final String SMS_REQUEST_STATUS_SENT="SENT";
 
+    public static final String SMS_REQUEST_STATUS_IN_PROCESSING="IN_PROCESSING";
     public static final String SMS_REQUEST_STATUS_QUEUED="QUEUED";
 
     public static final String SMS_REQUEST_STATUS_FAILURE="FAILURE";

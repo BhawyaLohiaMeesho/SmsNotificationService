@@ -55,8 +55,7 @@ public class ConsumerServiceImpl implements ConsumerService {
                }
                else smsRequestStatus = imiConnectSmsService.sendSms(smsRequest);
 
-               SmsRequest smsRequestWithUpdatedStatus = getSmsRequestWithUpdatedStatus(smsRequest, smsRequestStatus);
-               SmsRequest smsRequestWithUpdatedUpdateTime = smsRequestDao.save(smsRequestWithUpdatedStatus);
+               SmsRequest smsRequestWithUpdatedUpdateTime = smsRequestDao.updateSmsRequestStatus(smsRequest,smsRequestStatus);
 
                elasticsearchSmsRequestDao.save(smsRequestWithUpdatedUpdateTime);
 

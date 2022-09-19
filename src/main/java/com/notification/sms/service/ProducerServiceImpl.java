@@ -58,9 +58,9 @@ public class ProducerServiceImpl implements ProducerService {
     @Override
     public Integer sendSms(SmsRequest smsRequest) throws Exception {
             SmsRequest savedSmsRequest = smsRequestDao.save(smsRequest);
+            elasticsearchSmsRequestDao.save(savedSmsRequest);
             Integer requestId = savedSmsRequest.getId();
             kafkaProducerDao.sendSmsRequest(Data.TOPIC_SMS_REQUEST,requestId);
-            elasticsearchSmsRequestDao.save(savedSmsRequest);
             return requestId;
     }
 

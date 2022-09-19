@@ -45,7 +45,7 @@ public class SmsRequest {
     private LocalDateTime updatedAt;
 
     public SmsRequest(){
-        this.status= Data.SMS_REQUEST_STATUS_QUEUED;
+        this.status= Data.SMS_REQUEST_STATUS_IN_PROCESSING;
     }
 
     public SmsRequest(String phoneNumber, String message) {
